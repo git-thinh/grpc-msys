@@ -14,13 +14,8 @@ path_root 		= ${CURDIR}
 path_src		= $(path_root)/src
 path_proto		= $(path_root)/proto
 
-vpath %.proto $(path_proto)
+all: general_proto
 
-all: route_guide.pb.o
-	g++ $^ $(CXXFLAGS) -o $@
-	
-%.pb.cc: %.proto
-	protoc -I $(path_proto) --cpp_out=$(path_src) $<
-	
-
+general_proto:
+    $(foreach dir,$(path_proto),echo $(dir);)
 
