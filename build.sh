@@ -1,8 +1,8 @@
 clear
 PATH=/mingw64/bin:$PATH
-MIN_LIB=/c/msys2/App/msys32/mingw64/lib
-MIN_BIN=/c/msys2/App/msys32/mingw64/bin
-MIN_INCLUDE=/c/msys2/App/msys32/mingw64/include
+MIN_LIB=/mingw64/lib
+MIN_BIN=/mingw64/bin
+MIN_INCLUDE=/mingw64/include
 PREFIX=x86_64-w64-mingw32
 export C=$PREFIX-gcc.exe
 export CC=$PREFIX-gcc.exe
@@ -23,39 +23,54 @@ gcc -v
 echo
 PATH_ROOT=$(pwd)
 PATH_SRC=$(pwd)/src
+PATH_PROTO=$(pwd)/proto
+PATH_OBJ=$(pwd)/obj
 echo PATH_ROOT: $PATH_ROOT
 echo ----------------------------------------------------
 
 rm test_protobuf.exe
 rm $PATH_SRC/*
 
-protoc \
-	--proto_path=$PATH_ROOT/proto \
-	--grpc_out=$PATH_SRC \
-	--plugin=protoc-gen-grpc=$MIN_BIN/grpc_cpp_plugin.exe \
-	addressbook.proto
+# protoc \
+	# --proto_path=$PATH_PROTO \
+	# --grpc_out=$PATH_SRC \
+	# --plugin=protoc-gen-grpc=$MIN_BIN/grpc_cpp_plugin.exe \
+	# addressbook.proto
 	
-protoc \
-	--proto_path=$PATH_ROOT/proto \
-	--cpp_out=$PATH_SRC \
-	addressbook.proto
+# protoc \
+	# --proto_path=$PATH_PROTO \
+	# --cpp_out=$PATH_SRC \
+	# addressbook.proto
 	
-g++ -I$PATH_SRC -Wall \
-	test_protobuf.cpp $PATH_SRC/addressbook.pb.cc \
-	-lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 \
-	-o ./test_protobuf.exe
+# g++ -I$PATH_SRC -Wall \
+	# test_protobuf.cpp $PATH_SRC/addressbook.pb.cc \
+	# -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 \
+	# -o ./test_protobuf.exe
 
 protoc \
-	--proto_path=$PATH_ROOT/proto \
+	--proto_path=$PATH_PROTO \
 	--grpc_out=$PATH_SRC/ \
 	--plugin=protoc-gen-grpc=$MIN_BIN/grpc_cpp_plugin.exe \
 	route_guide.proto
 	
 protoc \
-	--proto_path=$PATH_ROOT/proto \
+	--proto_path=$PATH_PROTO \
 	--cpp_out=$PATH_SRC/ \
 	route_guide.proto
 
+# g++ -I$PATH_SRC -Wall \
+	# $PATH_SRC/route_guide.pb.cc \
+	# -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 \
+	# -o $PATH_OBJ/route_guide.pb.o	
+
+g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
+	route_guide_server.cc helper.cc \
+	$PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
+	-lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
+	-o ./route_server.exe
+	
+#-mwin32 -D_WIN32_WINNT=0x600	
+	
 # g++ -I$PATH_SRC -Wall route_guide_server.cc helper.cc $PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc -lprotobuf -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 -o ./route_guide_server.exe
 
 # g++ \
