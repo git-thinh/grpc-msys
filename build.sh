@@ -1,3 +1,14 @@
+# libeay32.dll        
+# libgpr.dll   
+# libgrpc++.dll    
+# libstdc++-6.dll      
+# ssleay32.dll
+# libgcc_s_seh-1.dll  
+# libgrpc.dll  
+# libprotobuf.dll  
+# libwinpthread-1.dll  
+# zlib1.dll
+
 clear
 PATH=/mingw64/bin:$PATH
 MIN_LIB=/mingw64/lib
