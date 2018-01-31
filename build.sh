@@ -104,58 +104,6 @@ g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
 	-o ./bin/hello_client.exe
 
 
-# g++ -I$PATH_SRC -Wall route_guide_server.cc helper.cc $PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc -lprotobuf -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 -o ./route_guide_server.exe
-
-# g++ \
-	# route_guide.pb.o route_guide.grpc.pb.o route_guide_client.o helper.o \
-		# -L/usr/local/lib `pkg-config --libs protobuf grpc++`\
-        # -lgrpc++_reflection\
-        # -ldl
-
-
-
-
-
-
-
-# g++ -I"C:/C++/protobuf/protobuf.3.5.1-gcc-7.2.0-sjlj/include" -L"C:/C++/protobuf/protobuf.3.5.1-gcc-7.2.0-sjlj/lib" main.cpp addressbook.pb.cc -lprotobuf -pthread -static-libgcc -std=c++11
-# g++ main.cpp addressbook.pb.cc -lprotobuf -pthread -static-libgcc -std=c++11
-# g++ main.cpp addressbook.pb.cc -lprotobuf -pthread -static-libgcc -std=c++11 -o app.exe
-# g++ main.cpp addressbook.pb.cc -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 -o app.exe
-
-# g++ -Wall main.cpp addressbook.pb.cc -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 -o app.exe
-
-# g++ -Wall main.cpp addressbook.pb.cc -pthread -static-libgcc -static-libstdc++ -std=c++11 $MIN_LIB/libprotobuf.dll.a -o app.exe
-# g++ -Wall main.cpp addressbook.pb.cc -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 $MIN_BIN/libprotobuf.dll $MIN_BIN/libwinpthread-1.dll -o app.exe
-
-
-
-
-
-# @echo off
-# CLS
-# SET "ECHO_TITLE=-----"
-# ::----------------------------------------------------------
-# SET "PATH_ROOT=%CD%\"
-# ECHO %ECHO_TITLE%PATH_ROOT=%PATH_ROOT%
-
-# SET "PATH_PROTOC=%PATH_ROOT%bin\protoc.exe"
-# ECHO %ECHO_TITLE%PATH_PROTOC=%PATH_PROTOC%
-
-# %PATH_PROTOC% -I=%PATH_ROOT% --cpp_out=%PATH_ROOT% %PATH_ROOT%addressbook.proto
-
-# SET "PATH_LIB=%PATH_ROOT%lib\"
-# ECHO %ECHO_TITLE%PATH_LIB=%PATH_LIB%
-
-# SET "PATH_INCLUDE=%PATH_ROOT%include\"
-# ECHO %ECHO_TITLE%PATH_INCLUDE=%PATH_INCLUDE%
-
-# g++ -I"%PATH_ROOT%" -I"%PATH_INCLUDE%" -L"%PATH_LIB%" test_protobuf.cpp addressbook.pb.cc -l"protobuf.dll" -pthread -static-libgcc -std=c++11
-
-# CALL a.exe
-
-# ::protoc -I=./ --cpp_out=./ addressbook.proto
-# ::g++ -I"C:/C++/protobuf/protobuf.3.5.1-gcc-7.2.0-sjlj/include" -L"C:/C++/protobuf/protobuf.3.5.1-gcc-7.2.0-sjlj/lib" main.cpp addressbook.pb.cc -lprotobuf -pthread -static-libgcc -std=c++11
 
 echo
 echo
