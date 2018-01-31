@@ -52,54 +52,56 @@ rm $PATH_ROOT/bin/*.exe
 
 #///////////////////////////////////////////////////////////////////////////////
 #-mwin32 -D_WIN32_WINNT=0x600	for win32
+# route_guide
 
-protoc \
-	--proto_path=$PATH_PROTO \
-	--grpc_out=$PATH_SRC/ \
-	--plugin=protoc-gen-grpc=$MIN_BIN/grpc_cpp_plugin.exe \
-	route_guide.proto
+# protoc \
+	# --proto_path=$PATH_PROTO \
+	# --grpc_out=$PATH_SRC/ \
+	# --plugin=protoc-gen-grpc=$MIN_BIN/grpc_cpp_plugin.exe \
+	# route_guide.proto
 	
-protoc \
-	--proto_path=$PATH_PROTO \
-	--cpp_out=$PATH_SRC/ \
-	route_guide.proto
+# protoc \
+	# --proto_path=$PATH_PROTO \
+	# --cpp_out=$PATH_SRC/ \
+	# route_guide.proto
 
-g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
-	route_guide_server.cc helper.cc \
-	$PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
-	-lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
-	-o ./bin/route_server.exe
+# g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
+	# route_guide_server.cc helper.cc \
+	# $PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
+	# -lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
+	# -o ./bin/route_server.exe
 	
-g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
-	route_guide_client.cc helper.cc \
-	$PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
-	-lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
-	-o ./bin/route_client.exe
+# g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
+	# route_guide_client.cc helper.cc \
+	# $PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
+	# -lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
+	# -o ./bin/route_client.exe
 	
 #///////////////////////////////////////////////////////////////////////////////
+# helloworld
 
 protoc \
 	--proto_path=$PATH_PROTO \
 	--grpc_out=$PATH_SRC/ \
 	--plugin=protoc-gen-grpc=$MIN_BIN/grpc_cpp_plugin.exe \
-	route_guide.proto
+	helloworld.proto
 	
 protoc \
 	--proto_path=$PATH_PROTO \
 	--cpp_out=$PATH_SRC/ \
-	route_guide.proto
+	helloworld.proto
 
 g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
-	route_guide_server.cc helper.cc \
-	$PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
+	greeter_server.cc \
+	$PATH_SRC/helloworld.pb.cc $PATH_SRC/helloworld.grpc.pb.cc \
 	-lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
-	-o ./bin/route_server.exe
+	-o ./bin/hello_server.exe
 	
 g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
-	route_guide_client.cc helper.cc \
-	$PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
+	greeter_client.cc \
+	$PATH_SRC/helloworld.pb.cc $PATH_SRC/helloworld.grpc.pb.cc \
 	-lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
-	-o ./bin/route_client.exe
+	-o ./bin/hello_client.exe
 
 
 # g++ -I$PATH_SRC -Wall route_guide_server.cc helper.cc $PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc -lprotobuf -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 -o ./route_guide_server.exe
