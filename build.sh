@@ -30,6 +30,9 @@ echo ----------------------------------------------------
 
 rm test_protobuf.exe
 rm $PATH_SRC/*
+rm $PATH_ROOT/bin/*.exe
+
+#///////////////////////////////////////////////////////////////////////////////
 
 # protoc \
 	# --proto_path=$PATH_PROTO \
@@ -47,6 +50,9 @@ rm $PATH_SRC/*
 	# -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 \
 	# -o ./test_protobuf.exe
 
+#///////////////////////////////////////////////////////////////////////////////
+#-mwin32 -D_WIN32_WINNT=0x600	for win32
+
 protoc \
 	--proto_path=$PATH_PROTO \
 	--grpc_out=$PATH_SRC/ \
@@ -58,18 +64,20 @@ protoc \
 	--cpp_out=$PATH_SRC/ \
 	route_guide.proto
 
-# g++ -I$PATH_SRC -Wall \
-	# $PATH_SRC/route_guide.pb.cc \
-	# -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 \
-	# -o $PATH_OBJ/route_guide.pb.o	
-
 g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
 	route_guide_server.cc helper.cc \
 	$PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
 	-lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
-	-o ./route_server.exe
+	-o ./bin/route_server.exe
 	
-#-mwin32 -D_WIN32_WINNT=0x600	
+g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
+	route_guide_client.cc helper.cc \
+	$PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc \
+	-lprotobuf -lgrpc++ -pthread -static-libgcc -static-libstdc++ -std=c++11 \
+	-o ./bin/route_client.exe
+#///////////////////////////////////////////////////////////////////////////////
+
+
 	
 # g++ -I$PATH_SRC -Wall route_guide_server.cc helper.cc $PATH_SRC/route_guide.pb.cc $PATH_SRC/route_guide.grpc.pb.cc -lprotobuf -lprotobuf -pthread -static-libgcc -static-libstdc++ -std=c++11 -o ./route_guide_server.exe
 
