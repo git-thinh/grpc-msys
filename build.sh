@@ -139,6 +139,37 @@ g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
 	-pthread -static-libgcc -static-libstdc++ -std=c++11 \
 	-o ./bin/hello_client_async.exe
 
+#///////////////////////////////////////////////////////////////////////////////
+# hellostreamingworld
+
+protoc \
+	--proto_path=$PATH_PROTO \
+	--grpc_out=$PATH_SRC/ \
+	--plugin=protoc-gen-grpc=$MIN_BIN/grpc_cpp_plugin.exe \
+	hellostreamingworld.proto
+	
+protoc \
+	--proto_path=$PATH_PROTO \
+	--cpp_out=$PATH_SRC/ \
+	hellostreamingworld.proto
+
+g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
+	multi_greeter_async_server.cc \
+	$PATH_SRC/hellostreamingworld.pb.cc $PATH_SRC/hellostreamingworld.grpc.pb.cc \
+	-lprotobuf -lgrpc++ \
+	-pthread -static-libgcc -static-libstdc++ -std=c++11 \
+	-o ./bin/multi_greeter_async_server.exe
+	
+g++ -I$PATH_SRC -Wall -D_WIN32_WINNT=0x600 \
+	multi_greeter_client.cc \
+	$PATH_SRC/hellostreamingworld.pb.cc $PATH_SRC/hellostreamingworld.grpc.pb.cc \
+	-lprotobuf -lgrpc++ \
+	-pthread -static-libgcc -static-libstdc++ -std=c++11 \
+	-o ./bin/multi_greeter_client.exe
+	
+	
+	
+	
 echo
 echo
 echo --------------
